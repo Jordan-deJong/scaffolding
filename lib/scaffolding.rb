@@ -5,7 +5,6 @@ module Scaffolding
   require 'pry'
   binding.pry
 
-
   def self.build(file)
     results = Scaffolding::Importer::Excel.process(file)
     if results.kind_of?(Array)
