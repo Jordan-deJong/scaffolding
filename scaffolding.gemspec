@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Jordan-deJong"]
   spec.email         = ["jordan.dejong@me.com"]
 
-  spec.summary       = %q{Generate a scaffold based on a CSV file.}
+  spec.summary       = %q{Generate a rails scaffold based on a CSV file.}
   spec.homepage      = "https://github.com/Jordan-deJong/scaffolding"
   spec.license       = "MIT"
 
