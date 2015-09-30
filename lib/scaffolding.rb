@@ -1,6 +1,8 @@
 require "scaffolding/version"
 
 module Scaffolding
+  require 'scaffolding/railtie' if defined?(Rails)
+
   def self.build(file)
     results = Scaffolding::Importer::Excel.process(file)
     if results.kind_of?(Array)

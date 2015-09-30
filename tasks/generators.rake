@@ -1,3 +1,4 @@
+desc 'generate a scaffold from file'
 task :gscaffold do |t|
   require 'scaffolding'
 
