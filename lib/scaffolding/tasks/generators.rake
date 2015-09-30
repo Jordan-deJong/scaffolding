@@ -1,5 +1,5 @@
 desc 'generate a scaffold from file'
-task :g:scaffold do |t|
+task :gscaffold do |t|
   require 'scaffolding'
 
   system "clear" or system "cls"

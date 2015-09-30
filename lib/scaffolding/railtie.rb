@@ -3,11 +3,9 @@ require 'rails'
 
 module Scaffolding
   class Generators < Rails::Railtie
-    require 'pry'
 
     rake_tasks do
-      binding.pry
-      load 'tasks/generators.rake'
+      load "../scaffolding/lib/scaffolding/tasks/generators.rake"
     end
 
   end
