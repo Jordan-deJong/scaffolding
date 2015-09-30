@@ -4,10 +4,16 @@ module Scaffolding
   require 'colorize'
 
   def self.build(file)
-    #'C:\Users\jdejong\Desktop\Windows.csv'
-    result = Scaffolding::Importer::Excel.process(file).to_s
-    puts result
-    # exec result
+    results = Scaffolding::Importer::Excel.process(file)
+    if results.kind_of?(Array)
+      results.each do |error|
+        puts error.red
+      end
+      puts ""
+    else
+      exec results.to_s
+      #exec
+    end
   end
 end
 

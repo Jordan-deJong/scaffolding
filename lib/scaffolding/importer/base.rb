@@ -2,12 +2,12 @@ module Scaffolding
   module Importer
     class Base
 
-      def initialize(file = "")
+      def initialize(file="")
+        @errors = []
         @data = valid_data?(file)
         @file_name = File.basename(file, ".*" ).to_s.split.join.downcase
         @code_string = "rails g scaffold #{@file_name}"
         @scaffolding = {}
-        @errors = []
       end
 
       def errors
