@@ -1,7 +1,6 @@
 module Scaffolding
   module Importer
     class Excel < Scaffolding::Importer::Base
-      require 'CSV'
 
       def initialize(file = "")
         super
