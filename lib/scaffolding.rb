@@ -2,8 +2,6 @@ require "scaffolding/version"
 
 module Scaffolding
   require 'scaffolding/railtie' if defined?(Rails)
-  require 'pry'
-  binding.pry
 
   def self.build(file)
     results = Scaffolding::Importer::Excel.process(file)
