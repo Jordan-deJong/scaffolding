@@ -5,7 +5,7 @@ module Scaffolding
   class Generators < Rails::Railtie
 
     rake_tasks do
-      load "tasks/generators.rake"
+      Dir[File.join(File.dirname(__FILE__),'tasks/*.rake')].each { |f| load f }
     end
 
   end

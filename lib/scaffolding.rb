@@ -12,7 +12,6 @@ module Scaffolding
       puts ""
     else
       exec results.to_s
-      #exec
     end
   end
 end
