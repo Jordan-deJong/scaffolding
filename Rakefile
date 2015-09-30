@@ -10,7 +10,12 @@ end
 
 task :b do |t|
   require 'scaffolding'
-  puts "Enter a relative file name to build the scaffold"
+
+  system "clear" or system "cls"
+  puts "\n***** Scaffolding Gem *****\n\n\n"
+  puts "Enter a relative file name to build the scaffold".green
   file = STDIN.gets.chomp
-  Scaffolding.build('C:\Users\jdejong\Desktop\Windows.csv')
+
+  Scaffolding.build(file)
+  # 'C:\Users\jdejong\Desktop\Windows.csv'
 end
