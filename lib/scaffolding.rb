@@ -1,13 +1,11 @@
 require "scaffolding/version"
 
 module Scaffolding
-  require 'colorize'
-
   def self.build(file)
     results = Scaffolding::Importer::Excel.process(file)
     if results.kind_of?(Array)
       results.each do |error|
-        puts error.red
+        puts "\e[31m#{error}\e[0m"
       end
       puts ""
     else
