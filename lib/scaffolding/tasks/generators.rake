@@ -1,6 +1,7 @@
 namespace :g do
   desc 'generate a scaffold from file'
   task :scaffold do |t|
+    require 'rails/generators'
     require 'scaffolding'
 
     system "clear" or system "cls"
@@ -36,7 +37,7 @@ namespace :g do
 
     puts "\n\n\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
     if STDIN.gets.chomp == "y"
-      generate results.to_s
+      Rails::Generators.invoke("scaffold", results.to_s)
       puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
       if STDIN.gets.chomp == "y"
         Rake::Task["db:migrate"].invoke
@@ -51,8 +52,4 @@ namespace :g do
     end
   end
 
-  desc 'Import data from file into new scaffold'
-  task :import do |t|
-
-  end
 end

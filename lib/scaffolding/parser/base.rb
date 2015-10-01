@@ -7,7 +7,7 @@ module Scaffolding
         @errors = []
         @data = valid_data?(file)
         @file_name = File.basename(file, ".*" ).to_s.split.join.camelize
-        @code_string = "rails g scaffold #{@file_name}"
+        @code_string = @file_name
         @scaffolding = {}
       end
 
