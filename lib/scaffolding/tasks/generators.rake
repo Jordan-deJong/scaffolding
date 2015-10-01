@@ -37,13 +37,16 @@ namespace :g do
 
     puts "\n\n\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
     if STDIN.gets.chomp == "y"
-      Rails::Generators.invoke("scaffold", results.to_s)
+      Rails::Generators.invoke("scaffold", results, "--force-plural")
+
       puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
       if STDIN.gets.chomp == "y"
         Rake::Task["db:migrate"].invoke
+
         puts "\n\n\e[32mImport the data from #{@file}?(y/n)\e[0m\n"
         if STDIN.gets.chomp == "y"
           Scaffolding.import_data(@file)
+
         end
       end
     else

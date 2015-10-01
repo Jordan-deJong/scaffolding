@@ -22,7 +22,7 @@ module Scaffolding
             process_row(row.inject({}){|row,(k,v)| row[k.downcase.to_sym] = v; row})
           rescue => e
             @errors << "Unable to process row #{@row_number} Error: #{e}\n"
-          end #rescue block
+          end
         end
         scaffold_rank
         @errors
@@ -53,11 +53,13 @@ module Scaffolding
 
         @scaffolding.each do |scaffold, data_types|
           data_type = data_types.max_by{|k,v| v}[0]
+
           if @manual == "y"
             puts "\n\e[32m#{scaffold}\e[0m is a \e[33m#{data_type}\e[0m? (y/string/integer/date ect)"
             answer = STDIN.gets.chomp
             data_type = answer unless answer == "y"
           end
+
           @scaffolding[scaffold] = data_type
         end
       end

@@ -4,7 +4,7 @@ module Scaffolding
       class CsvData < Scaffolding::Parser::Csv
 
         def process_row(row)
-           "#{@file_name.strip.singularize}".constantize.new(row).save
+           "#{@file_name}".constantize.new(row).save
         end
 
         def scaffold_rank

@@ -6,8 +6,8 @@ module Scaffolding
       def initialize(file="")
         @errors = []
         @data = valid_data?(file)
-        @file_name = File.basename(file, ".*" ).to_s.split.join.camelize
-        @code_string = @file_name
+        @file_name = File.basename(file, ".*" ).to_s.split.join.camelize.strip.singularize
+        @scaffold_builder = [@file_name]
         @scaffolding = {}
       end
 
@@ -17,7 +17,8 @@ module Scaffolding
 
       def valid_data?(file)
         unless file == ""
-          if [".csv", ".xls", ".xlsx"].include? File.extname(file)
+          # if [".csv", ".xls", ".xlsx"].include? File.extname(file)
+          if File.extname(file) == ".csv"
             File.read(utf8_encode(file))
           else
             @errors << "Unknown file type: #{File.extname(file)}"
@@ -36,9 +37,9 @@ module Scaffolding
       def code_string
         process_data
         @scaffolding.each do |k, v|
-          @code_string << " #{k}:#{v}"
+          @scaffold_builder << "#{k}:#{v}"
         end
-        @code_string
+        @scaffold_builder
       end
 
       def data_types
@@ -48,7 +49,7 @@ module Scaffolding
       def self.process(file)
         importer = self.new(file)
         return importer.errors unless importer.errors.count == 0
-        importer.code_string.to_s
+        importer.code_string
       end
 
     end
