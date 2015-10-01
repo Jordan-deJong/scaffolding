@@ -48,11 +48,17 @@ module Scaffolding
       end
 
       def scaffold_rank
+        puts "\n\e[33mManually choose data types?(y/n)\e[0m"
+        @manual = STDIN.gets.chomp
+
         @scaffolding.each do |scaffold, data_types|
           data_type = data_types.max_by{|k,v| v}[0]
-          puts "\n\e[32m#{scaffold}\e[0m is a \e[33m#{data_type}\e[0m? (y/string/integer/date ect)"
-          answer = STDIN.gets.chomp
-          @scaffolding[scaffold] = (answer == "y" ? data_type : answer)
+          if @manual == "y"
+            puts "\n\e[32m#{scaffold}\e[0m is a \e[33m#{data_type}\e[0m? (y/string/integer/date ect)"
+            answer = STDIN.gets.chomp
+            data_type = answer unless answer == "y"
+          end
+          @scaffolding[scaffold] = data_type
         end
       end
 

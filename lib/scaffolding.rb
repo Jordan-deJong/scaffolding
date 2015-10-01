@@ -6,6 +6,10 @@ module Scaffolding
   def self.generate(file)
     Scaffolding::Parser::Csv.process(file)
   end
+
+  def self.import_data(file)
+    Scaffolding::Parser::Importer::Csv.process(file)
+  end
 end
 
 require 'scaffolding/parser/base'

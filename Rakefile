@@ -32,6 +32,9 @@ task :b do |t|
 
     if STDIN.gets.chomp == "y"
       exec results.to_s + "; rake db:migrate"
+
+      puts "\n\n\e[32mImport the data in #{@file}?(y/n)\e[0m\n"
+      self.import_data(@file) if STDIN.gets.chomp == "y"
     else
       exec results.to_s
     end
