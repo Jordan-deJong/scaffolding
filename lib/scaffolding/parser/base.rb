@@ -41,6 +41,10 @@ module Scaffolding
         @code_string
       end
 
+      def data_types
+        {string: 0, date: 0, integer: 0, boolean: 0, decimal: 0, time: 0, datetime: 0}
+      end
+
       def self.process(file)
         importer = self.new(file)
         return importer.errors unless importer.errors.count == 0

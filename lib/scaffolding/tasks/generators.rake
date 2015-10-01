@@ -10,9 +10,9 @@ namespace :g do
     puts '../../../../desktop/mac.csv'
     puts 'C:\Users\username\Desktop\Windows.csv'
     puts ""
-    file = STDIN.gets.chomp
-    results = Scaffolding.build(file)
+    @file = STDIN.gets.chomp
 
+    results = Scaffolding.generate(@file)
     if results.kind_of?(Array)
       results.each do |error|
         puts "\e[31m#{error}\e[0m"
@@ -21,23 +21,20 @@ namespace :g do
       next
     end
 
-    puts "\n\n\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m\n"
-    answer = STDIN.gets.chomp
+    puts "\n\n\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
 
-    if answer == "y"
-      exec results.to_s
+    if STDIN.gets.chomp == "y"
+      puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
+
+      if STDIN.gets.chomp == "y"
+        exec results.to_s + "; rake db:migrate"
+      else
+        exec results.to_s
+      end
+
     else
       puts "\nHeres the code:"
       puts results.to_s
-      next
     end
 
-    puts "\n\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
-    answer = STDIN.gets.chomp
-
-    if answer == "y"
-      exec "rake db:migrate"
-    end
-
-  end
 end
