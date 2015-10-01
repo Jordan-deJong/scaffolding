@@ -27,7 +27,11 @@ namespace :g do
       puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
 
       if STDIN.gets.chomp == "y"
+        puts "\n\n\e[32mImport the data in #{@file}?(y/n)\e[0m\n"
+        import = STDIN.gets.chomp
+
         exec results.to_s + "; rake db:migrate"
+        self.import_data(@file) if import == "y"
       else
         exec results.to_s
       end
@@ -36,5 +40,5 @@ namespace :g do
       puts "\nHeres the code:"
       puts results.to_s
     end
-
+  end
 end

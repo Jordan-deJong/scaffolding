@@ -8,9 +8,10 @@ module Scaffolding
   end
 
   def self.import_data(file)
-    Scaffolding::Parser::Importer::Csv.process(file)
+    Scaffolding::Parser::Importer::CsvData.process(file)
   end
 end
 
 require 'scaffolding/parser/base'
 require 'scaffolding/parser/csv'
+require 'scaffolding/parser/importer/csvdata'
