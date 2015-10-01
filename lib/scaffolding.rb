@@ -4,11 +4,10 @@ module Scaffolding
   require 'scaffolding/railtie' if defined?(Rails)
 
   def self.generate(file)
-    @file = file
     Scaffolding::Parser::Csv.process(file)
   end
 
-  def self.import_data(file = @file)
+  def self.import_data(file)
     Scaffolding::Parser::Importer::CsvData.process(file)
   end
 end

@@ -31,7 +31,7 @@ module Scaffolding
 
       def setup_columns(columns)
         columns.each do |column|
-          @scaffolding[column.downcase.to_sym] = data_types unless column.downcase == "id"
+          @scaffolding[column.downcase.to_sym] = data_types
         end
       end
 
@@ -67,7 +67,7 @@ module Scaffolding
 
       def results
         @scaffolding.each do |k, v|
-          @scaffold_builder << " #{k}:#{v}"
+          @scaffold_builder << " #{k}:#{v}" unless k.to_s.downcase == "id"
         end
         @scaffold_builder
       end
