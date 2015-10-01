@@ -3,6 +3,7 @@ require 'csv'
 
 #C:\Users\jdejong\Desktop\Windows.csv
 #C:\Users\jdejong\Desktop\data.xlsx
+# Scaffolding::Parser::Importer::CsvData.process('C:\Users\jdejong\Desktop\Windows.csv')
 
 task :b do |t|
   require 'scaffolding'
@@ -31,10 +32,11 @@ task :b do |t|
     puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
 
     if STDIN.gets.chomp == "y"
-      exec results.to_s + "; rake db:migrate"
+      puts "\n\n\e[32mImport the data from #{@file}?(y/n)\e[0m\n"
+      import = STDIN.gets.chomp
 
-      puts "\n\n\e[32mImport the data in #{@file}?(y/n)\e[0m\n"
-      self.import_data(@file) if STDIN.gets.chomp == "y"
+      exec results.to_s + "; rake db:migrate"
+      Scaffolding.import_data(@file) if import == "y"
     else
       exec results.to_s
     end
