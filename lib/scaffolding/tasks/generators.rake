@@ -21,24 +21,38 @@ namespace :g do
       next
     end
 
+    # puts "\n\n\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
+    # if STDIN.gets.chomp == "y"
+    #   executions = ""
+    #   puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
+    #   if STDIN.gets.chomp == "y"
+    #     executions << "; rake db:migrate"
+    #     puts "\n\n\e[32mImport the data from #{@file}?(y/n)\e[0m\n"
+    #     if STDIN.gets.chomp == "y"
+    #       executions << "; rake g:import"
+    #     end
+    #   end
+    #   exec results.to_s + executions
+
     puts "\n\n\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
-
     if STDIN.gets.chomp == "y"
+      generate results.to_s
       puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
-
       if STDIN.gets.chomp == "y"
+        Rake::Task["db:migrate"].invoke
         puts "\n\n\e[32mImport the data from #{@file}?(y/n)\e[0m\n"
-        import = STDIN.gets.chomp
-
-        exec results.to_s + "; rake db:migrate"
-        Scaffolding.import_data(@file) if import == "y"
-      else
-        exec results.to_s
+        if STDIN.gets.chomp == "y"
+          Scaffolding.import_data(@file)
+        end
       end
-
     else
       puts "\nHeres the code:"
       puts results.to_s
     end
+  end
+
+  desc 'Import data from file into new scaffold'
+  task :import do |t|
+
   end
 end

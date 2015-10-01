@@ -32,11 +32,10 @@ task :b do |t|
     puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
 
     if STDIN.gets.chomp == "y"
-      puts "\n\n\e[32mImport the data from #{@file}?(y/n)\e[0m\n"
-      import = STDIN.gets.chomp
-
       exec results.to_s + "; rake db:migrate"
-      Scaffolding.import_data(@file) if import == "y"
+
+      puts "\n\n\e[32mImport the data from #{@file}?(y/n)\e[0m\n"
+      Scaffolding.import_data(@file) if STDIN.gets.chomp == "y"
     else
       exec results.to_s
     end
@@ -45,5 +44,4 @@ task :b do |t|
     puts "\nHeres the code:"
     puts results.to_s
   end
-
 end
