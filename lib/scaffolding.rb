@@ -15,3 +15,4 @@ end
 require 'scaffolding/parser/base'
 require 'scaffolding/parser/csv'
 require 'scaffolding/parser/importer/csvdata'
+require 'tasks/generators.rake'
