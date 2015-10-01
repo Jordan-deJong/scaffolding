@@ -1,17 +1,13 @@
 namespace :g do
-  desc 'generate a scaffold from file'
+  desc 'generate a scaffold from a csv file'
   task :scaffold do |t|
-    require 'rails/generators'
-    # require 'thor'
+    # require 'rails/generators'
     require 'scaffolding'
 
     system "clear" or system "cls"
     puts "\n***** Scaffolding Gem *****\n\n\n"
     puts "\e[32mEnter a relative file name to build the scaffold\e[0m\n"
-    puts "Example:"
-    puts '../../../../desktop/mac.csv'
-    puts 'C:\Users\username\Desktop\Windows.csv'
-    puts ""
+    puts "You are currently here: #{Dir.pwd}\n\n"
     @file = STDIN.gets.chomp
 
     results = Scaffolding.generate(@file)
@@ -23,38 +19,48 @@ namespace :g do
       next
     end
 
-    # puts "\n\n\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
-    # if STDIN.gets.chomp == "y"
-    #   executions = ""
-    #   puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
-    #   if STDIN.gets.chomp == "y"
-    #     executions << "; rake db:migrate"
-    #     puts "\n\n\e[32mImport the data from #{@file}?(y/n)\e[0m\n"
-    #     if STDIN.gets.chomp == "y"
-    #       executions << "; rake g:import"
-    #     end
-    #   end
-    #   exec results.to_s + executions
-
-    puts "\n\n\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
+    puts "\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
     if STDIN.gets.chomp == "y"
-      Rails::Generators.invoke("scaffold", results, "--force-plural")
-      # generate "scaffold", results
+      executions = ""
 
-      puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
+      puts "\n\e[32mMigrate the database?(y/n)\e[0m\n"
       if STDIN.gets.chomp == "y"
-        Rake::Task["db:migrate"].invoke
+        executions << "; rake db:migrate"
 
-        puts "\n\n\e[32mImport the data from #{@file}?(y/n)\e[0m\n"
+        puts "\n\e[32mImport the data from #{@file}?(y/n)\e[0m\n"
         if STDIN.gets.chomp == "y"
-          Scaffolding.import_data(@file)
-
+          executions << "; rake imporr:csv:data"
         end
       end
+      exec "rails g scaffold " + results.to_s + executions
     else
-      puts "\nHeres the code:"
-      puts results.to_s
+
+    # puts "\n\n\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
+    # if STDIN.gets.chomp == "y"
+    #   Rails::Generators.invoke("active_record:model", results)
+    #
+    #   puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
+    #   if STDIN.gets.chomp == "y"
+    #     Rake::Task["db:migrate"].invoke
+    #
+    #     puts "\n\n\e[32mImport the data from #{@file}?(y/n)\e[0m\n"
+    #     if STDIN.gets.chomp == "y"
+    #       Scaffolding.import_data(@file)
+    #
+    #     end
+    #   end
+    # else
+      puts "Heres the code:"
+      puts "rails g scaffold" + results.to_s
     end
   end
+end
 
+namespace :import do
+  namespace :csv do
+    desc 'Import data from CSV file'
+    task :data do |t|
+      Scaffolding.import_data
+    end
+  end
 end

@@ -2,6 +2,7 @@ module Scaffolding
   module Parser
     class Base
       require 'rails'
+      require 'csv'
 
       def initialize(file="")
         @errors = []
@@ -34,14 +35,6 @@ module Scaffolding
         s.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8, invalid: :replace, undef: :replace)
       end
 
-      def code_string
-        process_data
-        @scaffolding.each do |k, v|
-          @scaffold_builder << " #{k}:#{v}"
-        end
-        @scaffold_builder
-      end
-
       def data_types
         {string: 0, date: 0, integer: 0, boolean: 0, decimal: 0, time: 0, datetime: 0}
       end
@@ -49,7 +42,7 @@ module Scaffolding
       def self.process(file)
         importer = self.new(file)
         return importer.errors unless importer.errors.count == 0
-        importer.code_string
+        importer.process_data
       end
 
     end

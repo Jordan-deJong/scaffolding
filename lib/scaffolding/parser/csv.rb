@@ -24,13 +24,14 @@ module Scaffolding
             @errors << "Unable to process row #{@row_number} Error: #{e}\n"
           end
         end
+        return @errors unless @errors.count == 0
         scaffold_rank
-        @errors
+        results
       end
 
       def setup_columns(columns)
         columns.each do |column|
-          @scaffolding[column.downcase.to_sym] = data_types
+          @scaffolding[column.downcase.to_sym] = data_types unless column.downcase == "id"
         end
       end
 
@@ -62,6 +63,13 @@ module Scaffolding
 
           @scaffolding[scaffold] = data_type
         end
+      end
+
+      def results
+        @scaffolding.each do |k, v|
+          @scaffold_builder << " #{k}:#{v}"
+        end
+        @scaffold_builder
       end
 
     end
