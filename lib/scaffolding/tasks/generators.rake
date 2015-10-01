@@ -2,6 +2,7 @@ namespace :g do
   desc 'generate a scaffold from file'
   task :scaffold do |t|
     require 'rails/generators'
+    # require 'thor'
     require 'scaffolding'
 
     system "clear" or system "cls"
@@ -38,6 +39,7 @@ namespace :g do
     puts "\n\n\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
     if STDIN.gets.chomp == "y"
       Rails::Generators.invoke("scaffold", results, "--force-plural")
+      # generate "scaffold", results
 
       puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
       if STDIN.gets.chomp == "y"

@@ -7,7 +7,7 @@ module Scaffolding
         @errors = []
         @data = valid_data?(file)
         @file_name = File.basename(file, ".*" ).to_s.split.join.camelize.strip.singularize
-        @scaffold_builder = [@file_name]
+        @scaffold_builder = @file_name
         @scaffolding = {}
       end
 
@@ -37,7 +37,7 @@ module Scaffolding
       def code_string
         process_data
         @scaffolding.each do |k, v|
-          @scaffold_builder << "#{k}:#{v}"
+          @scaffold_builder << " #{k}:#{v}"
         end
         @scaffold_builder
       end
