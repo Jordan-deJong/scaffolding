@@ -1,11 +1,12 @@
 module Scaffolding
-  module Importer
+  module Parser
     class Base
+      require 'rails'
 
       def initialize(file="")
         @errors = []
         @data = valid_data?(file)
-        @file_name = File.basename(file, ".*" ).to_s.split.join.downcase
+        @file_name = File.basename(file, ".*" ).to_s.split.join.camelize
         @code_string = "rails g scaffold #{@file_name}"
         @scaffolding = {}
       end
@@ -32,18 +33,6 @@ module Scaffolding
         s.force_encoding(Encoding::ISO_8859_1).encode(Encoding::UTF_8, invalid: :replace, undef: :replace)
       end
 
-    #   def camelize(term, uppercase_first_letter = true)
-    #    string = term.to_s
-    #    if uppercase_first_letter
-    #      string = string.sub(/^[a-z\d]*/) { inflections.acronyms[$&] || $&.capitalize }
-    #    else
-    #      string = string.sub(/^(?:#{inflections.acronym_regex}(?=\b|[A-Z_])|\w)/) { $&.downcase }
-    #    end
-    #    string.gsub!(/(?:_|(\/))([a-z\d]*)/) { "#{$1}#{inflections.acronyms[$2] || $2.capitalize}" }
-    #    string.gsub!(/\//, '::')
-    #    string
-    #  end
-
       def code_string
         process_data
         @scaffolding.each do |k, v|
@@ -55,7 +44,7 @@ module Scaffolding
       def self.process(file)
         importer = self.new(file)
         return importer.errors unless importer.errors.count == 0
-        importer.code_string.to_s + "; rake db:migrate"
+        importer.code_string.to_s
       end
 
     end

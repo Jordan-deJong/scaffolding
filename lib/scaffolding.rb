@@ -4,17 +4,9 @@ module Scaffolding
   require 'scaffolding/railtie' if defined?(Rails)
 
   def self.build(file)
-    results = Scaffolding::Importer::Excel.process(file)
-    if results.kind_of?(Array)
-      results.each do |error|
-        puts "\e[31m#{error}\e[0m"
-      end
-      puts ""
-    else
-      exec results.to_s
-    end
+    Scaffolding::Parser::Excel.process(file)
   end
 end
 
-require 'scaffolding/importer/base'
-require 'scaffolding/importer/excel'
+require 'scaffolding/parser/base'
+require 'scaffolding/parser/excel'

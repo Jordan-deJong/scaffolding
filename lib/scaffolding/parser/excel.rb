@@ -47,7 +47,7 @@ module Scaffolding
       def scaffold_rank
         @scaffolding.each do |scaffold, data_types|
           data_type = data_types.max_by{|k,v| v}[0]
-          puts "\n\e[32m#{scaffold}\e[0m is a \e[33m#{data_type}\e[0m? (y/string/integer/date)"
+          puts "\n\e[33m#{scaffold}\e[0m is a \e[33m#{data_type}\e[0m? (y/string/integer/date)"
           answer = STDIN.gets.chomp
           @scaffolding[scaffold] = (answer == "y" ? data_type : answer)
         end
