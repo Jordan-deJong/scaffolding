@@ -10,7 +10,7 @@ module Scaffolding
         end
 
         def process_row(row)
-           model = "#{@file_name}".constantize.new(row)
+           model = @file_name.classify.constantize.new(row.except!(:id))
            model.save ? @saved += 1 : @failed += 1
         end
 

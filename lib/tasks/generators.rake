@@ -11,13 +11,7 @@ namespace :g do
     file = STDIN.gets.chomp
 
     results = Scaffolding.generate(file)
-    if results.kind_of?(Array)
-      results.each do |error|
-        puts "\e[31m#{error}\e[0m"
-      end
-      puts ""
-      next
-    end
+    Scaffolding.errors(results)
 
     puts "\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
     if STDIN.gets.chomp == "y"
@@ -50,6 +44,7 @@ namespace :g do
     #     end
     #   end
     # else
+
       puts "Heres the code:"
       puts "rails g scaffold" + results.to_s
     end
@@ -59,10 +54,11 @@ end
 namespace :import do
   namespace :csv do
     desc 'Import data from CSV file'
-    task :data, [:file] do |t, args|
+    task :data, [:file]  => :environment do |t, args|
       results = Scaffolding.import_data(args[:file])
+      Scaffolding.errors(results)
       results.each do |k,v|
-        puts "#{k}: v"
+        puts "#{v} records #{k}"
       end
     end
   end

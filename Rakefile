@@ -5,6 +5,6 @@ require 'csv'
 #C:\Users\jdejong\Desktop\data.xlsx
 # /Users/Jordandejong/Desktop/ht.csv
 
-
-task :b do |t|
-end
+# 
+# task :b do |t|
+# end

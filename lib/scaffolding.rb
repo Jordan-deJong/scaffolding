@@ -10,6 +10,16 @@ module Scaffolding
   def self.import_data(file)
     Scaffolding::Parser::Importer::CsvData.process(file)
   end
+
+  def self.errors(array)
+    if array.kind_of?(Array)
+      array.each do |error|
+        puts "\e[31m#{error}\e[0m"
+      end
+      puts ""
+      next
+    end
+  end
 end
 
 require 'scaffolding/parser/base'
