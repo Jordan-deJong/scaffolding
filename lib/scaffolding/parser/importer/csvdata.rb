@@ -14,10 +14,9 @@ module Scaffolding
            model.save ? @saved += 1 : @failed += 1
         end
 
-        def scaffold_rank
-        end
-
         def results
+          process_data
+          return @errors unless @errors.count == 0
           {saved: @saved, failed: @failed}
         end
 

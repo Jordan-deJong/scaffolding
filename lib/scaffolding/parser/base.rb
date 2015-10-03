@@ -17,7 +17,7 @@ module Scaffolding
       end
 
       def valid_data?(file)
-        unless file == ""
+        unless file == "" || file.nil?
           # if [".csv", ".xls", ".xlsx"].include? File.extname(file)
           if File.extname(file) == ".csv"
             File.read(utf8_encode(file))
@@ -48,7 +48,7 @@ module Scaffolding
       def self.process(file)
         importer = self.new(file)
         return importer.errors unless importer.errors.count == 0
-        importer.process_data
+        importer.results
       end
 
     end
