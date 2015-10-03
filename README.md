@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-    $ rake g:scaffold
+    $ rails generate/g scaffolding path/to/file.csv
 
 ## Development
 

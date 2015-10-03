@@ -24,24 +24,18 @@ namespace :g do
       next
     end
 
-    puts "\n\n\n\e[32mWould you like to generate the scaffold now?(y/n)\e[0m"
+    Rails::Generators::Base.new.generate "scaffold", results
+
+    puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
     if STDIN.gets.chomp == "y"
-      Rails::Generators::Base.new.generate "scaffold", results
+      Rake::Task["db:migrate"].invoke
 
-      puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
+      puts "\n\n\e[32mImport the data from #{file}?(y/n)\e[0m\n"
       if STDIN.gets.chomp == "y"
-        Rake::Task["db:migrate"].invoke
-
-        puts "\n\n\e[32mImport the data from #{file}?(y/n)\e[0m\n"
-        if STDIN.gets.chomp == "y"
-          Scaffolding.import_data(file).each do |k,v|
-            puts "#{v} records #{k}"
-          end
+        Scaffolding.import_data(file).each do |k,v|
+          puts "#{v} records #{k}"
         end
       end
-    else
-      puts "Heres the code:"
-      puts "rails g scaffold" + results.to_s
     end
   end
 end
