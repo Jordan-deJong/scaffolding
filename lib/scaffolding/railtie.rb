@@ -7,5 +7,8 @@ module Scaffolding
       # load "../scaffolding/lib/scaffolding/tasks/generators.rake"
       load "tasks/generators.rake"
     end
+    generators do
+      require "scaffolding/generators/scaffolding_generator"
+    end
   end
 end

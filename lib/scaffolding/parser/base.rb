@@ -39,6 +39,12 @@ module Scaffolding
         {string: 0, date: 0, integer: 0, boolean: 0, decimal: 0, time: 0, datetime: 0}
       end
 
+      def col_seperator
+        seperators = {}
+        [",","\t"].each {|seperator| seperators[seperator] = @data.count(seperator)}
+        seperators.max_by{|k,v| v}[0]
+      end
+
       def self.process(file)
         importer = self.new(file)
         return importer.errors unless importer.errors.count == 0

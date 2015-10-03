@@ -8,12 +8,6 @@ module Scaffolding
         @row_number = 0
       end
 
-      def col_seperator
-        seperators = {}
-        [",","\t"].each {|seperator| seperators[seperator] = @data.count(seperator)}
-        seperators.max_by{|k,v| v}[0]
-      end
-
       def process_data(data = @data)
         CSV.parse(data, headers: @headers, col_sep: col_seperator, skip_blanks: true) do |row|
           setup_columns(row.to_h.keys) if @row_number == 0
@@ -51,16 +45,13 @@ module Scaffolding
       def scaffold_rank
         puts "\n\e[33mManually choose data types?(y/n)\e[0m"
         @manual = STDIN.gets.chomp
-
         @scaffolding.each do |scaffold, data_types|
           data_type = data_types.max_by{|k,v| v}[0]
-
           if @manual == "y"
             puts "\n\e[32m#{scaffold}\e[0m is a \e[33m#{data_type}\e[0m? (y/string/integer/date ect)"
             answer = STDIN.gets.chomp
             data_type = answer unless answer == "y"
           end
-
           @scaffolding[scaffold] = data_type
         end
       end

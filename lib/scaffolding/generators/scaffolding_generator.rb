@@ -1,8 +1,8 @@
-namespace :g do
-  desc 'generate a scaffold from a csv file'
-  task :scaffold, [:file] do |t, args|
-    require 'rails/generators'
-    require 'scaffolding'
+require 'rails/generators'
+require 'scaffolding'
+
+class ScaffoldingGenerator < Rails::Generators::Base
+  def generate_scaffold
 
     system "clear" or system "cls"
     puts "\n***** Scaffolding Gem *****\n\n\n"
