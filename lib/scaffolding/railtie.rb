@@ -8,7 +8,7 @@ module Scaffolding
       load "tasks/generators.rake"
     end
     generators do
-      require "scaffolding/generators/scaffolding_generator"
+      require "generators/scaffolding_generator.rb"
     end
   end
 end
