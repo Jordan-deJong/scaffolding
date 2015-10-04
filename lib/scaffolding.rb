@@ -3,7 +3,7 @@ require "scaffolding/version"
 module Scaffolding
   if defined?(Rails)
     require 'scaffolding/railtie'
-    Dir.mkdir(Rails.root.join('tmp/scaffolding/*'))
+    # Dir.mkdir(File.join(Rails.root, 'tmp/scaffolding'))
   end
 
   def self.generate(file)
