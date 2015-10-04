@@ -22,7 +22,7 @@ module Scaffolding
           if File.extname(file) == ".csv"
             File.read(utf8_encode(file))
           else
-            @errors << "Unknown file type: #{File.extname(file)}"
+            @errors << "Unknown file type #{File.extname(file)} for #{file}"
             false
           end
         else
@@ -43,6 +43,19 @@ module Scaffolding
         seperators = {}
         [",","\t"].each {|seperator| seperators[seperator] = @data.count(seperator)}
         seperators.max_by{|k,v| v}[0]
+      end
+
+      def process_row(row)
+        row.each do |column, data|
+          data_type = :string
+          data_type = :boolean if ["true", "false"].include?(data.to_s.downcase) rescue data_type
+          data_type = :date if Date.parse(Date.strptime(data, '%m/%d/%Y')) rescue data_type
+          data_type = :time if Time.parse(Time.strptime(data, '%H:%M:%S')) rescue data_type
+          data_type = :datetime if DateTime.parse(DateTime.strptime(data, '%m/%d/%Y %H:%M:%S')) rescue data_type
+          data_type = :integer if Integer(data) rescue data_type
+          data_type = :decimal if ((data.to_f - data.to_i).abs > 0.0) rescue data_type
+          @scaffolding[column.to_sym][data_type] += 1 unless data == ""
+        end
       end
 
       def self.process(file)
