@@ -1,6 +1,6 @@
 # Scaffolding
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/scaffolding`. To experiment with that code, run `bin/console` for an interactive prompt.
+Generate a rails scaffold from a CSV and import the data into your rails application.
 
 ## Installation
 
@@ -20,7 +20,11 @@ Or install it yourself as:
 
 ## Usage
 
-    $ rails generate/g scaffolding path/to/file.csv
+    $ rails g/generate scaffolding path/to/file.csv
+
+Or add CSV files to the tmp/scaffolding directory and process them all with:
+
+    $ rails g/generate scaffolding
 
 ## Development
 
