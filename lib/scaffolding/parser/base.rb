@@ -3,13 +3,15 @@ module Scaffolding
     class Base
       require 'rails'
       require 'csv'
+      require 'uri'
 
-      def initialize(file="", auto)
+      def initialize(source="", auto)
         @errors = []
-        @data = valid_data?(file)
-        @file_name = File.basename(file, ".*" ).to_s.split.join.camelize.strip.singularize
-        @scaffold_builder = @file_name
+        @source = source
         @auto = auto
+        @data = valid_data?
+        @source_name = File.basename(@source, ".*" ).to_s.split.join.camelize.strip.singularize
+        @scaffold_builder = @source_name
         @scaffolding = {}
       end
 
@@ -17,17 +19,28 @@ module Scaffolding
         @errors
       end
 
-      def valid_data?(file)
-        unless file == "" || file.nil?
-          # if [".csv", ".xls", ".xlsx"].include? File.extname(file)
-          if File.extname(file) == ".csv"
-            File.read(utf8_encode(file))
-          else
-            @errors << "Unknown file type #{File.extname(file)} for #{file}"
-            false
-          end
+      def uri?
+        @source =~ URI::regexp
+      end
+
+      def valid_data?
+        if @source == "" || @source.nil?
+          @errors << "No @source selected"
+          return false
+        end
+        uri? ? web : file
+      end
+
+      def web
+        `curl "#{@source}"`.split("\n")
+      end
+
+      def file
+        ext = File.extname(@source)
+        if ext == ".csv"
+          File.read(utf8_encode(@source))
         else
-          @errors << "No file selected"
+          @errors << "Unknown source type #{File.extname(@source)} for #{@source}"
           false
         end
       end
@@ -59,8 +72,8 @@ module Scaffolding
         end
       end
 
-      def self.process(file, auto)
-        importer = self.new(file, auto)
+      def self.process(source, auto)
+        importer = self.new(source, auto)
         return importer.errors unless importer.errors.count == 0
         importer.results
       end

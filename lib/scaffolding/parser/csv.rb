@@ -33,7 +33,7 @@ module Scaffolding
         @scaffolding.each do |scaffold, data_types|
           data_type = data_types.max_by{|k,v| v}[0]
             unless @auto || manual != "y"
-              puts "\n\e[32m#{scaffold}\e[0m is a \e[33m#{data_type}\e[0m? (y/string/integer/date ect)"
+              puts "\n\e[32m#{scaffold}\e[0m is a \e[33m#{data_type}\e[0m? ([Enter]/string/integer/date ect)"
               answer = STDIN.gets.chomp.downcase
               data_type = answer unless answer == "y" || answer == ""
             end

@@ -7,7 +7,8 @@ module Scaffolding
     @source = source
     @migrate = migrate
     @import = import
-    results = Scaffolding::Parser::Csv.process(@source, auto)
+
+    results = "Scaffolding::Parser::#{File.extname(@source).gsub(".", "")}".send("process(#{@source}, #{auto})")
     return if Scaffolding.errors(results)
     Rails::Generators::Base.new.generate "scaffold", results
     Scaffolding.import_data if Scaffolding.migrate_database
