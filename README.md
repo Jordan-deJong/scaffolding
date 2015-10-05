@@ -28,7 +28,7 @@ Or add CSV files to the tmp/scaffolding directory and process them all with:
 
     $ rails g/generate scaffolding
 
-# Options:
+### Options:
 (You will be asked these at the terminal if you do not specify)
 
 Automatically determine the data types of each column:
