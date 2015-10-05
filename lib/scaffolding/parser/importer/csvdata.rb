@@ -3,7 +3,7 @@ module Scaffolding
     module Importer
       class CsvData < Scaffolding::Parser::Csv
 
-        def initialize(file="")
+        def initialize(file="", auto)
           super
           @saved = 0
           @failed = 0

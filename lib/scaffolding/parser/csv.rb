@@ -2,7 +2,7 @@ module Scaffolding
   module Parser
     class Csv < Scaffolding::Parser::Base
 
-      def initialize(file = "")
+      def initialize(file = "", auto)
         super
         @headers = true
         @row_number = 0
@@ -26,15 +26,17 @@ module Scaffolding
       end
 
       def scaffold_rank
-        puts "\n\e[33mManually choose data types?(y/n)\e[0m"
-        @manual = STDIN.gets.chomp
+        unless @auto
+          puts "\n\e[33mManually choose data types?(y/n)\e[0m"
+          manual = STDIN.gets.chomp
+        end
         @scaffolding.each do |scaffold, data_types|
           data_type = data_types.max_by{|k,v| v}[0]
-          if @manual == "y"
-            puts "\n\e[32m#{scaffold}\e[0m is a \e[33m#{data_type}\e[0m? (y/string/integer/date ect)"
-            answer = STDIN.gets.chomp
-            data_type = answer unless answer == "y" || answer == ""
-          end
+            unless @auto || manual != "y"
+              puts "\n\e[32m#{scaffold}\e[0m is a \e[33m#{data_type}\e[0m? (y/string/integer/date ect)"
+              answer = STDIN.gets.chomp.downcase
+              data_type = answer unless answer == "y" || answer == ""
+            end
           @scaffolding[scaffold] = data_type
         end
       end

@@ -1,6 +1,6 @@
 # Scaffolding
 
-Generate a rails scaffold from a CSV and import the data into your rails application.
+Generate a rails scaffold from a CSV file and import the data into your rails application.
 
 ## Installation
 
@@ -20,11 +20,27 @@ Or install it yourself as:
 
 ## Usage
 
+Ensure your file name is the same as the resource/model name you wish to generate.
+
     $ rails g/generate scaffolding path/to/file.csv
 
 Or add CSV files to the tmp/scaffolding directory and process them all with:
 
     $ rails g/generate scaffolding
+
+Options (You will be asked these at the terminal if you do not specify):
+
+Automatically determine the data types of each column.
+
+    --auto
+
+Migrate the database after the scaffold has been generated.
+
+    --migrate
+
+Import the data from the data source into the development database.
+
+    --import
 
 ## Development
 
