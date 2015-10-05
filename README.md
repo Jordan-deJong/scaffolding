@@ -33,7 +33,7 @@ then add CSV files to the 'tmp/scaffolding' directory and process them all with:
     $ rails g/generate scaffolding
 
 ### Options:
-(You will be asked these at the terminal if not specify)
+(You will be asked these at the terminal if not specified)
 
 Automatically determine the data types of each column:
 
