@@ -28,19 +28,24 @@ Or add CSV files to the tmp/scaffolding directory and process them all with:
 
     $ rails g/generate scaffolding
 
-Options (You will be asked these at the terminal if you do not specify):
+# Options:
+(You will be asked these at the terminal if you do not specify)
 
-Automatically determine the data types of each column.
+Automatically determine the data types of each column:
 
     --auto
 
-Migrate the database after the scaffold has been generated.
+Migrate the database after the scaffold has been generated:
 
     --migrate
 
-Import the data from the data source into the development database.
+Import the data from the data source into the development database:
 
     --import
+
+Example:
+
+    $ rails g scaffolding --auto --migrate --import
 
 ## Development
 
