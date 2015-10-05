@@ -7,11 +7,17 @@ module Scaffolding
     @source = source
     @migrate = migrate
     @import = import
+    @auto = auto
 
-    results = "Scaffolding::Parser::#{File.extname(@source).gsub(".", "")}".send("process(#{@source}, #{auto})")
+    results = Scaffolding.parser
     return if Scaffolding.errors(results)
+
     Rails::Generators::Base.new.generate "scaffold", results
     Scaffolding.import_data if Scaffolding.migrate_database
+  end
+
+  def self.parser
+    "Scaffolding::Parser::#{File.extname(@source).gsub(".", "").capitalize}".constantize.process(@source, @auto)
   end
 
   def self.errors(results)

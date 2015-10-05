@@ -28,7 +28,7 @@ module Scaffolding
           @errors << "No @source selected"
           return false
         end
-        uri? ? web : file
+        uri? == nil ? file : web
       end
 
       def web
