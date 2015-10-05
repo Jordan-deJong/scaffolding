@@ -1,10 +1,7 @@
 require "scaffolding/version"
 
 module Scaffolding
-  if defined?(Rails)
-    require 'scaffolding/railtie'
-    # Dir.mkdir(source.join(Rails.root, 'tmp/scaffolding'))
-  end
+  require 'scaffolding/railtie'
 
   def self.generate(source, auto, migrate, import)
     @source = source

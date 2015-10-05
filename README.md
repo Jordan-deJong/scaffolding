@@ -24,12 +24,16 @@ Ensure your file name is the same as the resource/model name you wish to generat
 
     $ rails g/generate scaffolding path/to/file.csv
 
-Or add CSV files to the tmp/scaffolding directory and process them all with:
+Or
+
+    $ rake scaffolding:folder
+
+then add CSV files to the 'tmp/scaffolding' directory and process them all with:
 
     $ rails g/generate scaffolding
 
 ### Options:
-(You will be asked these at the terminal if you do not specify)
+(You will be asked these at the terminal if not specify)
 
 Automatically determine the data types of each column:
 
