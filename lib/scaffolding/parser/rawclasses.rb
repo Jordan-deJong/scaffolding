@@ -1,8 +1,4 @@
-module Scaffolding
-  module Parser
-    class Dat < Scaffolding::Parser::Raw
-    end
-    class Txt < Scaffolding::Parser::Raw
-    end
-  end
+raw_class = Class.new(Scaffolding::Parser::Raw) do
 end
+Scaffolding::Parser.const_set("Dat", raw_class)
+Scaffolding::Parser.const_set("Txt", raw_class)
