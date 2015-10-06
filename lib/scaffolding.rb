@@ -58,7 +58,7 @@ end
 
 require 'scaffolding/parser/base'
 require 'scaffolding/parser/raw'
-require 'scaffolding/parser/rawclasses'
 require 'scaffolding/parser/csv'
-require 'scaffolding/parser/importer/csvdata'
-require 'scaffolding/parser/importer/datdata'
+# require 'scaffolding/parser/importer/csvdata'
+# require 'scaffolding/parser/importer/datdata'
+require 'scaffolding/parser/importer/rawdata'
