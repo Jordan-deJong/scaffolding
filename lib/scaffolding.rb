@@ -16,8 +16,9 @@ module Scaffolding
     Scaffolding.import_data if Scaffolding.migrate_database
   end
 
-  def self.parser
-    "Scaffolding::Parser::#{File.extname(@source).gsub(".", "").capitalize}".constantize.process(@source, @auto)
+  def self.parser(namespace="", type="")
+    klass = "Scaffolding::Parser#{namespace + "::" + File.extname(@source).gsub(".", "").capitalize + type}"
+    klass.constantize.process(@source, @auto)
   end
 
   def self.errors(results)
@@ -47,7 +48,7 @@ module Scaffolding
       answer = STDIN.gets.chomp.downcase
     end
     if @import || answer == "y"
-      Scaffolding::Parser::Importer::CsvData.process(@source, false).each do |k,v|
+      Scaffolding.parser("::Importer", "Data").each do |k,v|
         puts "#{v} records #{k}"
       end
     end
@@ -57,4 +58,5 @@ end
 
 require 'scaffolding/parser/base'
 require 'scaffolding/parser/csv'
+require 'scaffolding/parser/dat'
 require 'scaffolding/parser/importer/csvdata'
