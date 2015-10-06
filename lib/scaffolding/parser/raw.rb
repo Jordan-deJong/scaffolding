@@ -2,12 +2,8 @@ module Scaffolding
   module Parser
     class Raw < Scaffolding::Parser::Base
 
-      def initialize(file = "", auto)
-        super
-        @data = @data.split("\n")
-      end
-
       def groom_data
+        @data = @data.split("\n")
         find_headers
         setup_columns
         hashed_data
@@ -59,9 +55,6 @@ module Scaffolding
       end
 
     end
-    
-    raw_class = Class.new(Scaffolding::Parser::Raw) do; end
-    Scaffolding::Parser.const_set("Dat", raw_class)
-    Scaffolding::Parser.const_set("Txt", raw_class)
+
   end
 end

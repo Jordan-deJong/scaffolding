@@ -17,8 +17,11 @@ module Scaffolding
   end
 
   def self.parser(namespace="")
-    klass = "Scaffolding::Parser#{namespace + "::" + File.extname(@source).gsub(".", "").capitalize}"
-    klass.constantize.process(@source, @auto)
+    "Scaffolding::Parser#{namespace + "::" + Scaffolding.class_ref}".constantize.process(@source, @auto)
+  end
+
+  def self.class_ref
+    {csv: "Csv", dat: "Raw", txt: "Raw"}[File.extname(@source).gsub(".", "").to_sym]
   end
 
   def self.errors(results)

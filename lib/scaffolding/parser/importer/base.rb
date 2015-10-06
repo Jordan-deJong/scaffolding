@@ -1,7 +1,7 @@
 module Scaffolding
   module Parser
     module Importer
-      ["Csv", "Txt", "Dat"].each do |type|
+      ["Csv", "Raw"].each do |type|
         importer_class = Class.new("Scaffolding::Parser::#{type}".constantize) do
 
           def initialize(file="", auto)
@@ -23,7 +23,6 @@ module Scaffolding
           end
 
         end
-
         Scaffolding::Parser::Importer.const_set(type, importer_class)
       end
     end

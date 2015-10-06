@@ -2,12 +2,8 @@ module Scaffolding
   module Parser
     class Csv < Scaffolding::Parser::Base
 
-      def initialize(file = "", auto)
-        super
-        @headers = true
-      end
-
       def groom_data
+        @headers = true
         setup_columns
       end
 
