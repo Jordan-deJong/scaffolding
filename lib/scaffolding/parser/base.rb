@@ -73,7 +73,7 @@ module Scaffolding
           data_type = :time if Time.parse(Time.strptime(data, '%H:%M:%S')) rescue data_type
           data_type = :datetime if DateTime.parse(DateTime.strptime(data, '%m/%d/%Y %H:%M:%S')) || DateTime.parse(DateTime.strptime(data, '%d/%m/%Y %H:%M:%S')) rescue data_type
           data_type = :integer if Integer(data) rescue data_type
-          data_type = :decimal if ((data.to_f - data.to_i).abs >= 0.0) rescue data_type
+          data_type = :decimal if variable.to_f % 1 != 0 rescue data_type
           @scaffolding[column.to_sym][data_type] += 1 unless data == ""
         end
       end

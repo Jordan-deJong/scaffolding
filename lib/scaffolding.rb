@@ -2,12 +2,13 @@ require "scaffolding/version"
 
 module Scaffolding
   require 'scaffolding/railtie'
+  require 'pry'
 
   def self.generate(source, auto, migrate, import)
     @source = source
+    @auto = auto
     @migrate = migrate
     @import = import
-    @auto = auto
 
     results = Scaffolding.parser
     return if Scaffolding.errors(results)
@@ -39,6 +40,7 @@ module Scaffolding
       answer = STDIN.gets.chomp.downcase
     end
     if @migrate || answer == "y"
+      Rake::Task["db:migrate"].reenable
       Rake::Task["db:migrate"].invoke
     else
       false
