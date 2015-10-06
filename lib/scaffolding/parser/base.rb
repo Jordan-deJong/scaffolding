@@ -15,8 +15,7 @@ module Scaffolding
       end
 
       def setup
-        @data = valid_data?
-        return unless @data
+        return unless @data = valid_data?
         @col_seperator = col_seperator
         @source_name = File.basename(@source, ".*" ).to_s.split.join.camelize.strip.singularize
         @scaffold_builder = @source_name

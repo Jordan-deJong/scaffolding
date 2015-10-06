@@ -57,6 +57,7 @@ module Scaffolding
 end
 
 require 'scaffolding/parser/base'
+require 'scaffolding/parser/raw'
 require 'scaffolding/parser/csv'
 require 'scaffolding/parser/dat'
 require 'scaffolding/parser/txt'
