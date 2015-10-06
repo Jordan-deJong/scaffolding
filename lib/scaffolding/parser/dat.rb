@@ -2,6 +2,11 @@ module Scaffolding
   module Parser
     class Dat < Scaffolding::Parser::Base
 
+      def initialize(file = "", auto)
+        super
+        @data = @data.split("\n")
+      end
+
       def find_headers
         hc = header_count
         rows = 0

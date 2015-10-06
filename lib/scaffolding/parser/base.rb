@@ -4,7 +4,6 @@ module Scaffolding
       require 'rails'
       require 'csv'
       require 'uri'
-      require 'pry'
 
       def initialize(source="", auto)
         @source = source
@@ -17,6 +16,7 @@ module Scaffolding
 
       def setup
         @data = valid_data?
+        return unless @data
         @col_seperator = col_seperator
         @source_name = File.basename(@source, ".*" ).to_s.split.join.camelize.strip.singularize
         @scaffold_builder = @source_name
@@ -39,15 +39,15 @@ module Scaffolding
       end
 
       def web
-        `curl "#{@source}"`.split("\n")
+        `curl "#{@source}"`
       end
 
       def file
         ext = File.extname(@source)
-        if ext == ".csv"
+        if [".csv", ".dat", ".txt"].include? ext
           File.read(utf8_encode(@source))
         else
-          @errors << "Unknown source type #{File.extname(@source)} for #{@source}"
+          @errors << "Unknown source type #{ext} for #{@source}"
           false
         end
       end
