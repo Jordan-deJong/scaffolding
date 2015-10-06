@@ -7,13 +7,19 @@ module Scaffolding
         @data = @data.split("\n")
       end
 
+      def groom_data
+        find_headers
+        setup_columns
+        hashed_data
+      end
+
       def find_headers
         hc = header_count
         rows = 0
         @data.map do |row|
           rows += 1
           if row.split(@col_seperator).count == hc
-            @headers = row.split(@col_seperator).map{ |header| header.strip.downcase }
+            @headers = row.split(@col_seperator).map{ |header| header.strip.downcase.gsub(/(\W|\d)/, "") }
             rows.times{ @data.shift }
             return
           end
@@ -34,10 +40,10 @@ module Scaffolding
         @data = @data.map do |row|
         fields  = row.split(@col_seperator)
         hash    = {}
-          @headers.each_with_index do |header, index|
-            hash[header] = fields[index].to_s.strip
-          end
-          hash
+        @headers.each_with_index do |header, index|
+          hash[header] = fields[index].to_s.strip
+        end
+        hash
         end
       end
 
@@ -50,14 +56,6 @@ module Scaffolding
             @errors << "Unable to process row #{@row_number} Error: #{e}\n"
           end
         end
-      end
-
-      def results
-        find_headers
-        setup_columns
-        hashed_data
-        process_data
-        super
       end
 
     end

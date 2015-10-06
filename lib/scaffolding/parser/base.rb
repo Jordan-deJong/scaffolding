@@ -102,6 +102,8 @@ module Scaffolding
       end
 
       def results
+        groom_data
+        process_data
         return @errors unless @errors.count == 0
         scaffold_rank
         build_string

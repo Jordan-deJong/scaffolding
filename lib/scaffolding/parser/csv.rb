@@ -7,6 +7,10 @@ module Scaffolding
         @headers = true
       end
 
+      def groom_data
+        setup_columns
+      end
+
       def setup_columns
         CSV.parse(@data, headers: @headers, col_sep: @col_seperator, skip_blanks: true).first.each do |column|
           @scaffolding[column[0].downcase.to_sym] = data_types
@@ -22,12 +26,6 @@ module Scaffolding
             @errors << "Unable to process row #{@row_number} Error: #{e}\n"
           end
         end
-      end
-
-      def results
-        setup_columns
-        process_data
-        super
       end
 
     end
