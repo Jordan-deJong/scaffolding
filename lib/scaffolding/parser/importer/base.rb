@@ -4,7 +4,7 @@ module Scaffolding
       ["Csv", "Raw"].each do |type|
         importer_class = Class.new("Scaffolding::Parser::#{type}".constantize) do
 
-          def initialize(file="", auto)
+          def initialize(file="", auto, uri)
             super
             @saved = 0
             @failed = 0

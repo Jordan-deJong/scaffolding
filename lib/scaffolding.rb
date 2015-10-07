@@ -2,13 +2,14 @@ require "scaffolding/version"
 
 module Scaffolding
   require 'scaffolding/railtie'
-  require 'pry'
+  require 'uri'
 
   def self.generate(source, auto, migrate, import)
     @source = source
     @auto = auto
     @migrate = migrate
     @import = import
+    @uri = Scaffolding.uri?
 
     results = Scaffolding.parser
     return if Scaffolding.errors(results)
@@ -17,12 +18,21 @@ module Scaffolding
     Scaffolding.import_data if Scaffolding.migrate_database
   end
 
+  def self.uri?
+    @source =~ URI::regexp
+  end
+
   def self.parser(namespace="")
-    "Scaffolding::Parser#{namespace + "::" + Scaffolding.class_ref}".constantize.process(@source, @auto)
+    "Scaffolding::Parser#{namespace + "::" + Scaffolding.class_ref}".constantize.process(@source, @auto, @uri)
   end
 
   def self.class_ref
-    {csv: "Csv", dat: "Raw", txt: "Raw"}[File.extname(@source).gsub(".", "").to_sym]
+    case File.extname(@source)
+    when ".csv" && @uri == false
+      "Csv"
+    else
+      "Raw"
+    end
   end
 
   def self.errors(results)
@@ -52,11 +62,7 @@ module Scaffolding
       puts "\n\n\e[32mImport the data from #{@source}?(y/n)\e[0m\n"
       answer = STDIN.gets.chomp.downcase
     end
-    if @import || answer == "y"
-      Scaffolding.parser("::Importer").each do |k,v|
-        puts "#{v} records #{k}"
-      end
-    end
+    Scaffolding.parser("::Importer").each{ |k,v| puts "#{v} records #{k}" } if @import || answer == "y"
   end
 
 end

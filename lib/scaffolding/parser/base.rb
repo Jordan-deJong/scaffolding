@@ -3,11 +3,11 @@ module Scaffolding
     class Base
       require 'rails'
       require 'csv'
-      require 'uri'
 
-      def initialize(source="", auto)
+      def initialize(source="", auto, uri)
         @source = source
         @auto = auto
+        @uri = uri
         @errors = []
         @scaffolding = {}
         @row_number = 0
@@ -25,16 +25,12 @@ module Scaffolding
         @errors
       end
 
-      def uri?
-        @source =~ URI::regexp
-      end
-
       def valid_data?
         if @source == "" || @source.nil?
-          @errors << "No @source selected"
+          @errors << "No source selected"
           return false
         end
-        uri? == nil ? file : web
+        @uri ? web : file
       end
 
       def web
@@ -88,7 +84,7 @@ module Scaffolding
             unless @auto || manual != "y"
               puts "\n\e[32m#{scaffold}\e[0m is a \e[33m#{data_type}\e[0m? ([Enter]/string/integer/date ect)"
               answer = STDIN.gets.chomp.downcase
-              data_type = answer unless answer == "y" || answer == ""
+              data_type = answer if data_types.keys.include?(answer.to_sym)
             end
           @scaffolding[scaffold] = data_type
         end
@@ -109,8 +105,8 @@ module Scaffolding
         build_string
       end
 
-      def self.process(source, auto)
-        importer = self.new(source, auto)
+      def self.process(source, auto, uri)
+        importer = self.new(source, auto, uri)
         return importer.errors unless importer.errors.count == 0
         importer.results
       end
