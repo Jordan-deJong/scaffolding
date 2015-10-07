@@ -20,19 +20,31 @@ Or install it yourself as:
 
 ## Usage
 
-Ensure your file name is the same as the resource/model name you wish to generate.
+    $ rails g scaffolding [source] [name]
 
-    $ rails g/generate scaffolding path/to/file.csv
+If a [name] is not passed, the scaffold will be named from the source:
 
-Or
+    $ rails g scaffolding path/to/file.csv
+
+Will generate a scaffold named file
+
+    $ rails g scaffolding path/to/file.csv purchase
+
+Will generate a scaffold named purchase
+
+You can also pass a URL as the source.
+
+#### Multiple
+
+To generate multiple scaffolds at the same time setup a scaffolding folder
 
     $ rake scaffolding:folder
 
 then add files to the 'tmp/scaffolding' directory and process them all with:
 
-    $ rails g/generate scaffolding
+    $ rails g scaffolding
 
-### Options:
+#### Options
 (You will be asked these at the terminal if not specified)
 
 Automatically determine the data types of each column:

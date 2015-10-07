@@ -4,8 +4,9 @@ module Scaffolding
       require 'rails'
       require 'csv'
 
-      def initialize(source="", auto, uri)
+      def initialize(source, name, auto, uri)
         @source = source
+        @name = name
         @auto = auto
         @uri = uri
         @errors = []
@@ -17,12 +18,21 @@ module Scaffolding
       def setup
         return unless @data = valid_data?
         @col_seperator = col_seperator
-        @source_name = File.basename(@source, ".*" ).to_s.split.join.camelize.strip.singularize
+        @source_name = source_name
         @scaffold_builder = @source_name
       end
 
       def errors
         @errors
+      end
+
+      def source_name
+        if @name  == ""
+          name = File.basename(@source, ".*")
+        else
+          name = @name.dup
+        end
+        name.to_s.downcase.split.join.camelize.strip.singularize
       end
 
       def valid_data?
@@ -105,8 +115,8 @@ module Scaffolding
         build_string
       end
 
-      def self.process(source, auto, uri)
-        importer = self.new(source, auto, uri)
+      def self.process(source, name, auto, uri)
+        importer = self.new(source, name, auto, uri)
         return importer.errors unless importer.errors.count == 0
         importer.results
       end

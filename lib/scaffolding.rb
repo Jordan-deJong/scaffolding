@@ -1,11 +1,12 @@
 require "scaffolding/version"
 
 module Scaffolding
-  require 'scaffolding/railtie'
+  require 'scaffolding/railtie' if defined?(Rails)
   require 'uri'
 
-  def self.generate(source, auto, migrate, import)
+  def self.generate(source, name, auto, migrate, import)
     @source = source
+    @name = name
     @auto = auto
     @migrate = migrate
     @import = import
@@ -23,7 +24,7 @@ module Scaffolding
   end
 
   def self.parser(namespace="")
-    "Scaffolding::Parser#{namespace + "::" + Scaffolding.class_ref}".constantize.process(@source, @auto, @uri)
+    "Scaffolding::Parser#{namespace + "::" + Scaffolding.class_ref}".constantize.process(@source, @name, @auto, @uri)
   end
 
   def self.class_ref
