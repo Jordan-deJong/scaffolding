@@ -4,7 +4,7 @@ Rails.application.load_tasks
 require 'scaffolding'
 
 class ScaffoldingGenerator < Rails::Generators::Base
-  desc "This generator generates a scaffold based on a CSV file and imports the data"
+  desc "This generator generates a scaffold based on a CSV, Dat or Txt file and imports the data"
   argument :source, :type => :string, :default => ""
   class_option :auto, :type => :boolean, :default => false, :description => "Automatically choose data types"
   class_option :migrate, :type => :boolean, :default => false, :description => "Migrate the database"
