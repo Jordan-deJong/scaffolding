@@ -42,11 +42,11 @@ module Scaffolding
         end
       end
 
-      def process_data
+      def process_data(process_row)
         @data.each do |row|
           @row_number += 1
           begin
-            process_row(row)
+            self.send(process_row, row)
           rescue => e
             @errors << "Unable to process row #{@row_number} Error: #{e}\n"
           end

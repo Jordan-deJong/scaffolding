@@ -19,19 +19,19 @@ module Scaffolding
     end
 
     def stack
-      @results = parser
+      @parser = parser
+      @results = @parser.results
       return if errors
       generate
       import_data if migrate_database
     end
 
-    def parser(namespace="")
-      "Scaffolding::Parser#{namespace + "::" + class_ref}".constantize.process(@source, @name, @auto, @uri)
+    def parser
+      "Scaffolding::Parser::#{class_ref}".constantize.new(@source, @name, @auto, @uri)
     end
 
     def class_ref
-      case File.extname(@source)
-      when ".csv" && @uri.nil?
+      if File.extname(@source) == ".csv" && @uri == nil
         "Csv"
       else
         "Raw"
@@ -69,16 +69,13 @@ module Scaffolding
         puts "\n\n\e[32mImport the data from #{@source}?(y/n)\e[0m\n"
         answer = STDIN.gets.chomp.downcase
       end
-      parser("::Importer").each{ |k,v| puts "#{v} records #{k}" } if @import || answer == "y"
+      @parser.import_data.each{ |k,v| puts "#{v} records #{k}" } if @import || answer == "y"
     end
   end
 
-  def production_controller
-    Rails::Generators::Base.new.generate "controller", "scaffolding"
-  end
 end
 
 require 'scaffolding/parser/base'
 require 'scaffolding/parser/raw'
 require 'scaffolding/parser/csv'
-require 'scaffolding/parser/importer/base'
+# require 'scaffolding/parser/importer/base'

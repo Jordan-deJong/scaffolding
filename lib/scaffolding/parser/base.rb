@@ -19,11 +19,7 @@ module Scaffolding
       end
 
       def source_name
-        if @name  == ""
-          name = File.basename(@source, ".*")
-        else
-          name = @name.dup
-        end
+        name = (@name == "" ? File.basename(@source, ".*") : @name.dup)
         name.to_s.downcase.split.join.camelize.strip.singularize
       end
 
@@ -63,7 +59,7 @@ module Scaffolding
         seperators.max_by{|k,v| v}[0]
       end
 
-      def process_row(row)
+      def predict_row(row)
         row.each do |column, data|
           data_type = :string
           data_type = :boolean if ["true", "false"].include?(data.to_s.downcase) rescue data_type
@@ -74,6 +70,13 @@ module Scaffolding
           data_type = :decimal if (data =~ (/[-]?\d*[,]?\d*[.]\d*[%]?$/)) == 0 rescue data_type
           @scaffolding[column.to_sym][data_type] += 1 unless data == ""
         end
+      end
+
+      def save_row(row)
+         @saved = 0
+         @failed = 0
+         model = @source_name.classify.constantize.new(row.except!(:id))
+         model.save ? @saved += 1 : @failed += 1
       end
 
       def scaffold_rank
@@ -93,7 +96,7 @@ module Scaffolding
       end
 
       def build_string
-        scaffold = @source_name
+        scaffold = @source_name.dup
         @scaffolding.each do |k, v|
           scaffold << " #{k}:#{v}" unless k.to_s.downcase == "id"
         end
@@ -102,16 +105,16 @@ module Scaffolding
 
       def results
         groom_data
-        process_data
+        process_data "predict_row"
         return @errors unless @errors.count == 0
         scaffold_rank
         build_string
       end
 
-      def self.process(source, name, auto, uri)
-        importer = self.new(source, name, auto, uri)
-        return importer.errors unless importer.errors.count == 0
-        importer.results
+      def import_data
+        process_data "save_row"
+        return @errors unless @errors.count == 0
+        {saved: @saved, failed: @failed}
       end
 
     end
