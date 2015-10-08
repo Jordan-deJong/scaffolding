@@ -5,20 +5,13 @@ module Scaffolding
       require 'csv'
 
       def initialize(source, name, auto, uri)
-        @source = source
-        @name = name
-        @auto = auto
-        @uri = uri
+        @source, @name, @auto, @uri = source, name, auto, uri
         @errors = []
-        @scaffolding = {}
-        @row_number = 0
-        setup
-      end
-
-      def setup
         return unless @data = valid_data?
         @col_seperator = col_seperator
-        @source_name, @scaffold_builder = source_name
+        @source_name = source_name
+        @scaffolding = {}
+        @row_number = 0
       end
 
       def errors
@@ -100,10 +93,11 @@ module Scaffolding
       end
 
       def build_string
+        scaffold = @source_name
         @scaffolding.each do |k, v|
-          @scaffold_builder << " #{k}:#{v}" unless k.to_s.downcase == "id"
+          scaffold << " #{k}:#{v}" unless k.to_s.downcase == "id"
         end
-        @scaffold_builder
+        scaffold
       end
 
       def results

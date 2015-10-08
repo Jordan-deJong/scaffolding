@@ -18,10 +18,10 @@ class ScaffoldingGenerator < Rails::Generators::Base
 
     if source == "" || source.nil?
       Dir[Rails.root.join('tmp/scaffolding/*')].each do |source|
-        Scaffolding::Build.new.stack(source, name, @auto, @migrate, @import)
+        Scaffolding::Build.new(source, name, @auto, @migrate, @import).stack
       end
     else
-      Scaffolding::Build.new.stack(source, name, @auto, @migrate, @import)
+      Scaffolding::Build.new(source, name, @auto, @migrate, @import).stack
     end
   end
 

@@ -1,6 +1,6 @@
 # Scaffolding
 
-Generate a rails scaffold from a CSV, Dat or Txt file and import the data into your rails application.
+Generate a rails scaffold from a CSV, Dat or Txt file and imports the data into your rails application.
 
 ## Installation
 

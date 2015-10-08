@@ -14,19 +14,15 @@ module Scaffolding
       @uri = uri?
     end
 
+    def uri?
+      @source =~ URI::regexp
+    end
+
     def stack
       @results = parser
       return if errors
       generate
       import_data if migrate_database
-    end
-
-    def generate
-      Rails::Generators::Base.new.generate "scaffold", @results
-    end
-
-    def uri?
-      @source =~ URI::regexp
     end
 
     def parser(namespace="")
@@ -42,8 +38,12 @@ module Scaffolding
       end
     end
 
+    def generate
+      Rails::Generators::Base.new.generate "scaffold", @results
+    end
+
     def errors
-      if results.kind_of?(Array)
+      if @results.kind_of?(Array)
         @results.each do |error|
           puts "\e[31m#{error}\e[0m"
         end
@@ -71,6 +71,10 @@ module Scaffolding
       end
       parser("::Importer").each{ |k,v| puts "#{v} records #{k}" } if @import || answer == "y"
     end
+  end
+
+  def production_controller
+    Rails::Generators::Base.new.generate "controller", 
   end
 end
 
