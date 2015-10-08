@@ -24,6 +24,7 @@ module Scaffolding
       def find_headers
         first_row = @data.map.first.split(@col_seperator)
         @headers = first_row.map{ |header| header.strip.downcase.gsub(/(\W|\d)/, "") }
+        @data.shift
       end
 
       def setup_columns
