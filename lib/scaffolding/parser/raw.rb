@@ -33,12 +33,12 @@ module Scaffolding
 
       def hashed_data
         @data = @data.map do |row|
-        fields  = row.split(@col_seperator)
-        hash    = {}
-        @headers.each_with_index do |header, index|
-          hash[header] = fields[index].to_s.strip
-        end
-        hash
+          fields  = row.split(@col_seperator)
+          hash    = {}
+          @headers.each_with_index do |header, index|
+            hash[header] = fields[index].to_s.strip
+          end
+          hash
         end
       end
 

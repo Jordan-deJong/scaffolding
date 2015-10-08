@@ -31,7 +31,7 @@ module Scaffolding
 
     def class_ref
       case File.extname(@source)
-      when ".csv" && @uri == false
+      when ".csv" && @uri.nil?
         "Csv"
       else
         "Raw"
