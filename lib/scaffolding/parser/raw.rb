@@ -55,6 +55,5 @@ module Scaffolding
       end
 
     end
-
   end
 end

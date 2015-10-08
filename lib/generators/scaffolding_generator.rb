@@ -12,18 +12,16 @@ class ScaffoldingGenerator < Rails::Generators::Base
   class_option :import, :type => :boolean, :default => false, :description => "Import data from source"
 
   def analyize_sources
-    @source = source
-    @name = name
     @auto = options[:auto]
     @migrate = options[:migrate]
     @import = options[:import]
 
-    if @source == "" || @source.nil?
+    if source == "" || source.nil?
       Dir[Rails.root.join('tmp/scaffolding/*')].each do |source|
-        Scaffolding.generate(source, @name, @auto, @migrate, @import)
+        Scaffolding::Build.new.stack(source, name, @auto, @migrate, @import)
       end
     else
-      Scaffolding.generate(@source, @name, @auto, @migrate, @import)
+      Scaffolding::Build.new.stack(source, name, @auto, @migrate, @import)
     end
   end
 
