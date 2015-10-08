@@ -4,28 +4,26 @@ module Scaffolding
 
       def groom_data
         @data = @data.split("\n")
+        @column_count = column_count
+        bad_data
         find_headers
         setup_columns
         hashed_data
       end
 
-      def find_headers
-        hc = header_count
-        rows = 0
-        @data.map do |row|
-          rows += 1
-          if row.split(@col_seperator).count == hc
-            @headers = row.split(@col_seperator).map{ |header| header.strip.downcase.gsub(/(\W|\d)/, "") }
-            rows.times{ @data.shift }
-            return
-          end
-        end
-      end
-
-      def header_count
+      def column_count
         row_counts = []
         @data.map{ |row| row_counts << row.split(@col_seperator).count }
         row_counts.uniq.max_by{ |i| row_counts.count(i) }
+      end
+
+      def bad_data
+        @data.delete_if {|row| row.split(@col_seperator).count != @column_count }
+      end
+
+      def find_headers
+        first_row = @data.map.first.split(@col_seperator)
+        @headers = first_row.map{ |header| header.strip.downcase.gsub(/(\W|\d)/, "") }
       end
 
       def setup_columns

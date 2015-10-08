@@ -74,7 +74,7 @@ module Scaffolding
   end
 
   def production_controller
-    Rails::Generators::Base.new.generate "controller", 
+    Rails::Generators::Base.new.generate "controller", "scaffolding"
   end
 end
 
