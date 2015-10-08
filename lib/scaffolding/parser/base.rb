@@ -15,7 +15,7 @@ module Scaffolding
       end
 
       def errors
-        @errors
+        @errors unless @errors.count == 0
       end
 
       def source_name
@@ -73,8 +73,6 @@ module Scaffolding
       end
 
       def save_row(row)
-         @saved = 0
-         @failed = 0
          model = @source_name.classify.constantize.new(row.except!(:id))
          model.save ? @saved += 1 : @failed += 1
       end
@@ -106,14 +104,16 @@ module Scaffolding
       def results
         groom_data
         process_data "predict_row"
-        return @errors unless @errors.count == 0
+        errors
         scaffold_rank
         build_string
       end
 
       def import_data
+        @saved = 0
+        @failed = 0
         process_data "save_row"
-        return @errors unless @errors.count == 0
+        errors
         {saved: @saved, failed: @failed}
       end
 

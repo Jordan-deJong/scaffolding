@@ -69,7 +69,11 @@ module Scaffolding
         puts "\n\n\e[32mImport the data from #{@source}?(y/n)\e[0m\n"
         answer = STDIN.gets.chomp.downcase
       end
-      @parser.import_data.each{ |k,v| puts "#{v} records #{k}" } if @import || answer == "y"
+      if @import || answer == "y"
+        @results = @parser.import_data
+        return if errors
+        @results.each{ |k,v| puts "#{v} records #{k}" }
+      end
     end
   end
 
@@ -78,4 +82,3 @@ end
 require 'scaffolding/parser/base'
 require 'scaffolding/parser/raw'
 require 'scaffolding/parser/csv'
-# require 'scaffolding/parser/importer/base'
