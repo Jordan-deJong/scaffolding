@@ -18,8 +18,7 @@ module Scaffolding
       def setup
         return unless @data = valid_data?
         @col_seperator = col_seperator
-        @source_name = source_name
-        @scaffold_builder = @source_name
+        @source_name, @scaffold_builder = source_name
       end
 
       def errors

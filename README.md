@@ -22,17 +22,18 @@ Or install it yourself as:
 
     $ rails g scaffolding [source] [name]
 
+You can pass either a path/to/the/file or a URL as the [source].    
+
 If a [name] is not passed, the scaffold will be named from the source:
 
     $ rails g scaffolding path/to/file.csv
 
 Will generate a scaffold named file
 
-    $ rails g scaffolding path/to/file.csv purchase
+    $ rails g scaffolding path/to/file.csv purchase_orders
 
-Will generate a scaffold named purchase
+Will generate a scaffold named purchase_orders
 
-You can also pass a URL as the source.
 
 #### Multiple
 
@@ -43,6 +44,8 @@ To generate multiple scaffolds at the same time setup a scaffolding folder
 then add files to the 'tmp/scaffolding' directory and process them all with:
 
     $ rails g scaffolding
+
+The scaffold's will be named the same as there respective files names.
 
 #### Options
 (You will be asked these at the terminal if not specified)
