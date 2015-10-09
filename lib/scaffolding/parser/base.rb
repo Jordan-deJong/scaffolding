@@ -9,7 +9,7 @@ module Scaffolding
         @errors = []
         return unless @data = valid_data?
         @col_seperator = col_seperator
-        @source_name = source_name
+        @source_name = clean_source_name
         @scaffolding = {}
         @row_number = 0
       end
@@ -19,9 +19,14 @@ module Scaffolding
       end
 
       def source_name
+        @source_name
+      end
+
+      def clean_source_name
         name = (@name == "" ? File.basename(@source, ".*") : @name.dup)
         name.to_s.downcase.split.join.camelize.strip.singularize
       end
+
 
       def valid_data?
         if @source == "" || @source.nil?
@@ -60,20 +65,16 @@ module Scaffolding
       end
 
       def predict_row(row)
-        beginning_time = Time.now
-
         row.each do |column, data|
           data_type = :string
           data_type = :boolean if ["true", "false"].include?(data.to_s.downcase)
           data_type = :time if data =~ /^([01]?[0-9]|2[0-3])\:[0-5][0-9]$/
+          data_type = :date if data =~ /\A(?:0?[1-9]|1[0-2])\/(?:0?[1-9]|[1-2]\d|3[01])\/\d{4}\Z/
           data_type = :datetime if data =~ /^([0,1]?\d{1})\/([0-2]?\d{1}|[3][0,1]{1})\/([1]{1}[9]{1}[9]{1}\d{1}|[2-9]{1}\d{3})\s([0]?\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)$/
           data_type = :integer if Integer(data) rescue data_type
           data_type = :decimal if (data =~ (/[-]?\d*[,]?\d*[.]\d*[%]?$/)) == 0
           @scaffolding[column.to_sym][data_type] += 1 unless data == ""
         end
-
-        end_time = Time.now
-        puts "bad_data #{(end_time - beginning_time)*1000} milliseconds"
       end
 
       def save_row(row)

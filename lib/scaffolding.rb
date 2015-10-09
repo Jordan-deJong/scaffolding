@@ -19,11 +19,16 @@ module Scaffolding
     end
 
     def stack
+      beginning_time = Time.now
+
       @parser = parser
       @results = @parser.results
       return if errors
       generate
       import_data if migrate_database
+
+      end_time = Time.now
+      puts "#{@parser.source_name} processed in #{(end_time - beginning_time).round(2)} seconds\n\n"
     end
 
     def parser
@@ -72,7 +77,8 @@ module Scaffolding
       if @import || answer == "y"
         @results = @parser.import_data
         return if errors
-        @results.each{ |k,v| puts "#{v} records #{k}" }
+        puts "\e[32m#{@results[:saved]}\e[0m records saved"
+        puts "\e[31m#{@results[:failed]}\e[0m records failed"
       end
     end
   end
