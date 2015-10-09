@@ -68,9 +68,9 @@ module Scaffolding
         row.each do |column, data|
           data_type = :string
           data_type = :boolean if ["true", "false"].include?(data.to_s.downcase)
-          data_type = :time if data =~ /^([01]?[0-9]|2[0-3])\:[0-5][0-9]$/
-          data_type = :date if data =~ /\A(?:0?[1-9]|1[0-2])\/(?:0?[1-9]|[1-2]\d|3[01])\/\d{4}\Z/
-          data_type = :datetime if data =~ /^([0,1]?\d{1})\/([0-2]?\d{1}|[3][0,1]{1})\/([1]{1}[9]{1}[9]{1}\d{1}|[2-9]{1}\d{3})\s([0]?\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)$/
+          data_type = :time if (data =~ /^([01]?[0-9]|2[0-3])\:[0-5][0-9]$/) == 0
+          data_type = :date if (data =~ /\A(?:0?[1-9]|1[0-2])\/(?:0?[1-9]|[1-2]\d|3[01])\/\d{4}\Z/) == 0
+          data_type = :datetime if (data =~ /^([0,1]?\d{1})\/([0-2]?\d{1}|[3][0,1]{1})\/([1]{1}[9]{1}[9]{1}\d{1}|[2-9]{1}\d{3})\s([0]?\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)$/) == 0
           data_type = :integer if Integer(data) rescue data_type
           data_type = :decimal if (data =~ (/[-]?\d*[,]?\d*[.]\d*[%]?$/)) == 0
           @scaffolding[column.to_sym][data_type] += 1 unless data == ""
@@ -79,7 +79,7 @@ module Scaffolding
 
       def save_row(row)
          model = @source_name.classify.constantize.new(row.except!(:id))
-         model.save ? @saved += 1 : @failed += 1
+         model.save! ? @saved += 1 : @failed += 1
       end
 
       def scaffold_rank
