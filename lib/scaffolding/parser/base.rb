@@ -64,12 +64,11 @@ module Scaffolding
 
         row.each do |column, data|
           data_type = :string
-          data_type = :boolean if ["true", "false"].include?(data.to_s.downcase) rescue data_type
-          data_type = :date if Date.parse(Date.strptime(data, '%m/%d/%Y')) || Date.parse(Date.strptime(data, '%d/%m/%Y')) rescue data_type
-          data_type = :time if Time.parse(Time.strptime(data, '%H:%M:%S')) rescue data_type
-          data_type = :datetime if DateTime.parse(DateTime.strptime(data, '%m/%d/%Y %H:%M:%S')) || DateTime.parse(DateTime.strptime(data, '%d/%m/%Y %H:%M:%S')) rescue data_type
+          data_type = :boolean if ["true", "false"].include?(data.to_s.downcase)
+          data_type = :time if data =~ /^([01]?[0-9]|2[0-3])\:[0-5][0-9]$/
+          data_type = :datetime if data =~ /^([0,1]?\d{1})\/([0-2]?\d{1}|[3][0,1]{1})\/([1]{1}[9]{1}[9]{1}\d{1}|[2-9]{1}\d{3})\s([0]?\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)$/
           data_type = :integer if Integer(data) rescue data_type
-          data_type = :decimal if (data =~ (/[-]?\d*[,]?\d*[.]\d*[%]?$/)) == 0 rescue data_type
+          data_type = :decimal if (data =~ (/[-]?\d*[,]?\d*[.]\d*[%]?$/)) == 0
           @scaffolding[column.to_sym][data_type] += 1 unless data == ""
         end
 
