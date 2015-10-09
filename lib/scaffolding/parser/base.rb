@@ -69,7 +69,7 @@ module Scaffolding
           data_type = :string
           data_type = :boolean if ["true", "false"].include?(data.to_s.downcase)
           data_type = :time if (data =~ /^([01]?[0-9]|2[0-3])\:[0-5][0-9]$/) == 0
-          data_type = :date if (data =~ /\A(?:0?[1-9]|1[0-2])\/(?:0?[1-9]|[1-2]\d|3[01])\/\d{4}\Z/) == 0
+          data_type = :date if (data =~ /\A(?:0?[1-9]|1[0-2])\/(?:0?[1-9]|[1-2]\d|3[01])\/\d{4}\Z/) == 0 ||  (data =~ /\A(?:0?[1-9]|[1-2]\d|3[01])\/(?:0?[1-9]|1[0-2])\/\d{4}\Z/) == 0
           data_type = :datetime if (data =~ /^([0,1]?\d{1})\/([0-2]?\d{1}|[3][0,1]{1})\/([1]{1}[9]{1}[9]{1}\d{1}|[2-9]{1}\d{3})\s([0]?\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)$/) == 0
           data_type = :integer if Integer(data) rescue data_type
           data_type = :decimal if (data =~ (/[-]?\d*[,]?\d*[.]\d*[%]?$/)) == 0
