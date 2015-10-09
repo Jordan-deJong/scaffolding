@@ -60,6 +60,8 @@ module Scaffolding
       end
 
       def predict_row(row)
+        beginning_time = Time.now
+
         row.each do |column, data|
           data_type = :string
           data_type = :boolean if ["true", "false"].include?(data.to_s.downcase) rescue data_type
@@ -70,6 +72,9 @@ module Scaffolding
           data_type = :decimal if (data =~ (/[-]?\d*[,]?\d*[.]\d*[%]?$/)) == 0 rescue data_type
           @scaffolding[column.to_sym][data_type] += 1 unless data == ""
         end
+
+        end_time = Time.now
+        puts "bad_data #{(end_time - beginning_time)*1000} milliseconds"
       end
 
       def save_row(row)
