@@ -3,6 +3,7 @@ module Scaffolding
     class Raw < Scaffolding::Parser::Base
 
       def groom_data
+        binding.pry
         @data = @data.split("\n")
         @column_count = column_count
         bad_data

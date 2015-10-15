@@ -29,9 +29,13 @@ namespace :scaffolding do
   end
   def import
     name = params[:file].original_filename.downcase.gsub(File.extname(params[:file].path), "")
-    results = Scaffolding::Build.new(params[:file], name.singularize, true, false, true).import_data
-    results.kind_of?(Array) ? flash[:alert] = results : flash[:notice] = results
-    redirect_to "/" + name
+    results = Scaffolding::Build.new(params[:file], name.singularize, true, false, true).import_bowser_data
+    if results.kind_of?(Array)
+     flash[:alert] = results
+     else
+      flash[:notice] = '\#{results[:saved]} records saved, \#{results[:failed]} results failed.'
+    end
+    redirect_to "/" + (name.ends_with?("s") ? name : name.pluralize)
   end
 end
 "

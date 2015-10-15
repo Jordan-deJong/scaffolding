@@ -85,6 +85,13 @@ module Scaffolding
         puts "\e[31m#{@results[:failed]}\e[0m records failed"
       end
     end
+
+    def import_browser_data
+      @parser.groom_data
+      @results = @parser.import_data
+      return if errors
+      {saved: @results[:saved], failed: @results[:failed]}
+    end
   end
 
 end
