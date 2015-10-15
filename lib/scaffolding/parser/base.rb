@@ -7,7 +7,6 @@ module Scaffolding
       def initialize(source, name, auto, uri)
         @source, @name, @auto, @uri = source, name, auto, uri
         @errors = []
-        upload?
         return unless @data = valid_data?
         @col_seperator = col_seperator
         @source_name = clean_source_name
@@ -38,10 +37,6 @@ module Scaffolding
 
       def web
         utf8_encode(`curl "#{@source}"`)
-      end
-
-      def upload?
-        @source = @source.path if @source.class == ActionDispatch::Http::UploadedFile.new() rescue false
       end
 
       def file

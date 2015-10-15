@@ -9,11 +9,16 @@ module Scaffolding
     def initialize(source, name, auto, migrate, import)
       @source, @name, @auto, @migrate, @import = source, name, auto, migrate, import
       @uri = uri?
+      upload?
       @parser = parser
     end
 
     def uri?
       @source =~ URI::regexp
+    end
+
+    def upload?
+      @source = @source.path if @source.class == ActionDispatch::Http::UploadedFile
     end
 
     def parser

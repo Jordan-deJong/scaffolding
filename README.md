@@ -79,8 +79,8 @@ Then go to http://localhost:3000/scaffolding/new
 And upload the file you wish to import.
 
 ##### Hot Tips:
-  This will only work if the file is named the same as the model.
-  If the files are rather large use the activerecord-session_store gem: https://github.com/rails/activerecord-session_store
+* This will only work if the file is named the same as the controller.
+* If the files are rather large use the activerecord-session_store gem: https://github.com/rails/activerecord-session_store
 
 ## Development
 

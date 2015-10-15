@@ -30,7 +30,7 @@ namespace :scaffolding do
   def import
     results = Scaffolding::Build.new(params[:file], '', true, false, true).import_data
     results.kind_of?(Array) ? flash[:alert] = results : flash[:notice] = results
-    redirect_to results.source_name.pluralize.downcase + '_path'
+    redirect_to '/' + params[:file].original_filename.downcase.gsub(File.extname(params[:file].path), "")
   end
 end
 "
