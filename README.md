@@ -66,21 +66,21 @@ Example:
 
     $ rails g scaffolding --auto --migrate --import
 
-#### Production
+#### Import file uploads
 
-To import data
+To import data from a file uploaded through the web browser:
 
     $ rake scaffolding:production
 
-Then go to localhost:3000/scaffolding/new
+    $ rails s
+
+Then go to http://localhost:3000/scaffolding/new
 
 And upload the file you wish to import.
 
-This will only work if the file is named the same as the model.
-
-If the files are rather large use the activerecord-session_store gem
-
-https://github.com/rails/activerecord-session_store
+##### Hot Tips:
+  This will only work if the file is named the same as the model.
+  If the files are rather large use the activerecord-session_store gem: https://github.com/rails/activerecord-session_store
 
 ## Development
 
