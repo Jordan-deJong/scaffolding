@@ -1,4 +1,3 @@
-require 'rails/generators'
 require 'rake'
 Rails.application.load_tasks
 require 'scaffolding'
@@ -18,10 +17,10 @@ class ScaffoldingGenerator < Rails::Generators::Base
 
     if source == "" || source.nil?
       Dir[Rails.root.join('tmp/scaffolding/*')].each do |source|
-        Scaffolding::Build.new(source, name, @auto, @migrate, @import).stack
+        Scaffolding::Build.new(source, name, @auto, @migrate, @import).time("stack")
       end
     else
-      Scaffolding::Build.new(source, name, @auto, @migrate, @import).stack
+      Scaffolding::Build.new(source, name, @auto, @migrate, @import).time("stack")
     end
   end
 

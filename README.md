@@ -66,6 +66,22 @@ Example:
 
     $ rails g scaffolding --auto --migrate --import
 
+#### Production
+
+To import data
+
+    $ rake scaffolding:production
+
+Then go to localhost:3000/scaffolding/new
+
+And upload the file you wish to import.
+
+This will only work if the file is named the same as the model.
+
+If the files are rather large use the activerecord-session_store gem
+
+https://github.com/rails/activerecord-session_store
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
