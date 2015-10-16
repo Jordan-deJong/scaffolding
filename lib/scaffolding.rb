@@ -88,8 +88,8 @@ module Scaffolding
 
     def import_browser_data
       @parser.groom_data
-      @results = @parser.import_data
       return if errors
+      @results = @parser.import_data
       {saved: @results[:saved], failed: @results[:failed]}
     end
   end
