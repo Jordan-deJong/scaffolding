@@ -25,18 +25,21 @@ namespace :scaffolding do
 
     File.open(File.join(Rails.root, "app/controllers/scaffolding_controller.rb"), 'w') {|f| f.write(
 "class ScaffoldingController < ApplicationController
+
   def new
   end
+
   def import
-    name = params[:file].original_filename.downcase.gsub(File.extname(params[:file].path), "")
-    results = Scaffolding::Build.new(params[:file], name.singularize, true, false, true).import_bowser_data
+    name = params[:file].original_filename.to_s.downcase.gsub(File.extname(params[:file].path), '')
+    results = Scaffolding::Build.new(params[:file], name.singularize, true, false, true).import_browser_data
     if results.kind_of?(Array)
      flash[:alert] = results
      else
-      flash[:notice] = '\#{results[:saved]} records saved, \#{results[:failed]} results failed.'
+      flash[:notice] = \"\#{results[:saved]} records saved, \#{results[:failed]} results failed.\"
     end
-    redirect_to "/" + (name.ends_with?("s") ? name : name.pluralize)
+    redirect_to '/' + (name.ends_with?('s') ? name : name.pluralize)
   end
+
 end
 "
       ) }
