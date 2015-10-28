@@ -22,7 +22,7 @@ Or install it yourself as:
 
     $ rails g scaffolding [source] [name]
 
-You can pass either a path/to/the/file or a URL as the [source].    
+You can pass either a path/to/the/file or a URL as the [source].
 
 If a [name] is not passed, the scaffold will be named from the source:
 
@@ -70,7 +70,7 @@ Example:
 
 To import data from a file uploaded through the web browser:
 
-    $ rake scaffolding:production
+    $ rake scaffolding:controller
 
     $ rails s
 

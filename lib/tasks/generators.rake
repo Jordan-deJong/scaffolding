@@ -7,7 +7,7 @@ namespace :scaffolding do
   end
 
   desc "Setup a production enviornemnt to import data from the files."
-  task :production do |t|
+  task :controller do |t|
     generators = Rails::Generators::Base.new
     generators.generate "controller", "scaffolding index --skip --skip-routes"
     generators.route "get '/scaffolding' => 'scaffolding#index'"
