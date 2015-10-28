@@ -9,11 +9,11 @@ namespace :scaffolding do
   desc "Setup a production enviornemnt to import data from the files."
   task :production do |t|
     generators = Rails::Generators::Base.new
-    generators.generate "controller", "scaffolding new --skip --skip-routes"
-    generators.route "get 'scaffolding/new'"
+    generators.generate "controller", "scaffolding index --skip --skip-routes"
+    generators.route "get '/scaffolding' => 'scaffolding#index'"
     generators.route "post 'scaffolding/import'"
 
-    File.open(File.join(Rails.root, "app/views/scaffolding/new.html.erb"), 'w') {|f| f.write(
+    File.open(File.join(Rails.root, "app/views/scaffolding/index.html.erb"), 'w') {|f| f.write(
 "<div class='authform'>
   <%= form_tag scaffolding_import_path, multipart: true do %>
     <%= file_field_tag :file %>
@@ -26,7 +26,7 @@ namespace :scaffolding do
     File.open(File.join(Rails.root, "app/controllers/scaffolding_controller.rb"), 'w') {|f| f.write(
 "class ScaffoldingController < ApplicationController
 
-  def new
+  def index
   end
 
   def import
