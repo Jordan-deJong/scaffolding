@@ -61,7 +61,7 @@ module Scaffolding
     end
 
     def migrate_database
-      unless @migrate
+      if @migrate == nil
         puts "\n\n\e[32mMigrate the database?(y/n)\e[0m\n"
         answer = STDIN.gets.chomp.downcase
       end
@@ -74,7 +74,7 @@ module Scaffolding
     end
 
     def import_data
-      unless @import
+      if @import == nil
         puts "\n\n\e[32mImport the data from #{@source}?(y/n)\e[0m\n"
         answer = STDIN.gets.chomp.downcase
       end

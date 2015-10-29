@@ -66,6 +66,12 @@ Example:
 
     $ rails g scaffolding --auto --migrate --import
 
+If you want to do a large number of files at once and only do specific tasks:
+
+    $ rails g scaffolding --auto --no-migrate --no-import  
+
+You can leave this running and it will generate scaffolds, but skip migration and importing data.
+
 #### Import file uploads
 
 To import data from a file uploaded through the web browser:

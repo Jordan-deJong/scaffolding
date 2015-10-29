@@ -82,7 +82,7 @@ module Scaffolding
       end
 
       def scaffold_rank
-        unless @auto
+        if @auto == nil
           puts "\n\e[33mManually choose data types?(y/n) for #{@source_name}\e[0m"
           manual = STDIN.gets.chomp
         end
