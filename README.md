@@ -74,7 +74,7 @@ To import data from a file uploaded through the web browser:
 
     $ rails s
 
-Then go to http://localhost:3000/scaffolding/new
+Then go to http://localhost:3000/scaffolding
 
 And upload the file you wish to import.
 
