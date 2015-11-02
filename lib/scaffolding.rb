@@ -5,7 +5,6 @@ module Scaffolding
   if defined?(Rails)
     require 'scaffolding/railtie'
     require 'rails/generators'
-    require 'rails'
   end
 
   class Build
