@@ -1,8 +1,13 @@
 require "scaffolding/version"
 
 module Scaffolding
-  require 'scaffolding/railtie' if defined?(Rails)
-  require 'rails/generators'
+
+  if defined?(Rails)
+    require 'scaffolding/railtie'
+    require 'rails/generators'
+    require 'rails'
+  end
+
   class Build
     require 'uri'
 

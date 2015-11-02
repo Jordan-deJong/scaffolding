@@ -1,7 +1,6 @@
 module Scaffolding
   module Parser
     class Base
-      require 'rails'
       require 'csv'
 
       def initialize(source, name, auto, uri)
