@@ -4,6 +4,8 @@ module Scaffolding
       require 'rails'
       require 'csv'
 
+      attr_accessor :source_name
+
       def initialize(source, name, auto, uri)
         @source, @name, @auto, @uri = source, name, auto, uri
         @errors = []
@@ -16,10 +18,6 @@ module Scaffolding
 
       def errors
         @errors unless @errors.count == 0
-      end
-
-      def source_name
-        @source_name
       end
 
       def clean_source_name
