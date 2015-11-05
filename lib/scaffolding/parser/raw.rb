@@ -4,14 +4,14 @@ module Scaffolding
 
       def groom_data
         @data = @data.split("\n")
-        @column_count = column_count
+        @column_count = column_counter
         bad_data
         find_headers
         setup_columns
         hashed_data
       end
 
-      def column_count
+      def column_counter
         row_counts = []
         @data.map{ |row| row_counts << row.split(@col_seperator).count }
         row_counts.uniq.max_by{ |i| row_counts.count(i) }
